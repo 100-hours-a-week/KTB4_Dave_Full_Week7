@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>회원가입 | 아무 말 대잔치</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <header class="header">
+    <button
+      id="backButton"
+      class="header__back-button"
+      type="button"
+      aria-label="이전 페이지로 이동"
+    >
+      ‹
+    </button>
+
+    <h1 class="header__title">아무 말 대잔치</h1>
+  </header>
+
+  <main class="signup">
+    <form id="signupForm" class="signup-form" novalidate>
+      <h2 class="signup-form__title">회원가입</h2>
+
+      <section class="profile" aria-labelledby="profileTitle">
+        <p id="profileTitle" class="profile__label">프로필 사진</p>
+
+        <input
+          id="profileImageInput"
+          class="profile__input"
+          type="file"
+          accept="image/*"
+        />
+
+        <label
+          id="profileImageButton"
+          class="profile__button"
+          for="profileImageInput"
+          aria-label="프로필 사진 업로드"
+        >
+          <img
+            id="profilePreview"
+            class="profile__preview"
+            src=""
+            alt="업로드한 프로필 사진 미리보기"
+            hidden
+          />
+          <span id="profilePlaceholder" class="profile__placeholder">+</span>
+        </label>
+      </section>
+
+      <div class="form-field">
+        <label class="form-field__label" for="email">이메일*</label>
+        <input
+          id="email"
+          class="form-field__input"
+          type="email"
+          placeholder="이메일을 입력하세요"
+          autocomplete="email"
+          aria-describedby="emailHelper"
+        />
+        <p id="emailHelper" class="form-field__helper" aria-live="polite">
+          *이메일은 영문과 @, . 만 사용이 가능함
+        </p>
+      </div>
+
+      <div class="form-field">
+        <label class="form-field__label" for="password">비밀번호*</label>
+        <input
+          id="password"
+          class="form-field__input"
+          type="password"
+          placeholder="비밀번호를 입력하세요"
+          autocomplete="new-password"
+          aria-describedby="passwordHelper"
+        />
+        <p id="passwordHelper" class="form-field__helper" aria-live="polite"></p>
+      </div>
+
+      <div class="form-field">
+        <label class="form-field__label" for="passwordConfirm">비밀번호 확인*</label>
+        <input
+          id="passwordConfirm"
+          class="form-field__input"
+          type="password"
+          placeholder="비밀번호를 한번 더 입력하세요"
+          autocomplete="new-password"
+          aria-describedby="passwordConfirmHelper"
+        />
+        <p id="passwordConfirmHelper" class="form-field__helper" aria-live="polite"></p>
+      </div>
+
+      <div class="form-field">
+        <label class="form-field__label" for="nickname">닉네임*</label>
+        <input
+          id="nickname"
+          class="form-field__input"
+          type="text"
+          placeholder="닉네임을 입력하세요"
+          autocomplete="nickname"
+          aria-describedby="nicknameHelper"
+        />
+        <p id="nicknameHelper" class="form-field__helper" aria-live="polite"></p>
+      </div>
+
+      <button
+        id="signupButton"
+        class="signup-form__submit"
+        type="submit"
+        disabled
+      >
+        회원가입
+      </button>
+
+      <a id="loginLink" class="signup-form__login-link" href="./login.html">
+        로그인하러 가기
+      </a>
+    </form>
+  </main>
+</body>
+</html>
