@@ -23,4 +23,4 @@ export function checkPasswordStyle(str) {
 export function confirmPassword(str1, str2){
     return str1 === str2;
 }
-console.log(checkWhiteSpace("abc"));
+console.log(checkPasswordStyle("asdfA123!"));
