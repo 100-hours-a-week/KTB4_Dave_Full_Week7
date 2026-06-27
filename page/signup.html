@@ -4,22 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>회원가입 | 아무 말 대잔치</title>
-  <link rel="stylesheet" href="./style.css" />
-  <script type="module" src="./js/signup.js"></script>
+  <link rel="stylesheet" href="../css/common.css" />
+  <link rel="stylesheet" href="../css/header.css" />
+  <link rel="stylesheet" href="../css/signup.css" />
+  <script type="module" src="../js/signup.js"></script>
+  <script type="module" src="../js/appHeader.js"></script>
 </head>
 <body>
-  <header class="header">
-    <button
-      id="backButton"
-      class="header__back-button"
-      type="button"
-      aria-label="이전 페이지로 이동"
-    >
-      ‹
-    </button>
-
-    <h1 class="header__title">아무 말 대잔치</h1>
-  </header>
+  <app-header back-url = "/page/signin.html"></app-header>
 
   <main class="signup">
     <form id="signupForm" class="signup-form" novalidate>
@@ -115,7 +107,7 @@
         회원가입
       </button>
 
-      <a id="loginLink" class="signup-form__login-link" href="./login.html">
+      <a id="loginLink" class="signup-form__login-link" href="/page/signin.html">
         로그인하러 가기
       </a>
     </form>

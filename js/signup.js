@@ -1,9 +1,11 @@
-import { checkStringLength, checkWhiteSpace, checkEmailStyle, checkPasswordStyle, confirmPassword } from "./StringChecker.js";
+import { checkStringLength, checkWhiteSpace, checkEmailStyle, checkPasswordStyle, confirmPassword, validPassword } from "./StringChecker.js";
+import { checkEmailDuplicate, fetchSignUp } from "./api/fetchData.js";
 
 const signUpForm = document.getElementById("signupForm");
 const signUpButton = document.getElementById("signupButton");
 const backButton = document.getElementById("backButton");
 
+const profileImage = document.getElementById("profileImageInput");
 const email = document.getElementById("email");
 const emailHelper = document.getElementById("emailHelper");
 let emailState = false;
@@ -18,33 +20,10 @@ const nicknameHelper = document.getElementById("nicknameHelper");
 let nicknameState = false;
 const loginLink = document.getElementById("loginLink");
 
-
-async function checkEmail(email) {
-    const request = new Request('http://www.localhost:8080/users/email', {
-        method: "POST",
-        body: '{"email": email'
-    });
-    try{
-        const data = await fetch(request);
-        console.log(data);
-        if(data.status === 200){
-            return true;
-        }else{
-            return false;
-        }
-        
-    }
-    catch(error){
-        console.log(error.message);
-    }
+function moveToLogin() {
+    window.location.href = "../page/signin.html";
 }
 
-function validPassword(str){
-    console.log(checkStringLength(str, 8, 20), "길이 성공");
-    console.log(checkPasswordStyle(str), "패턴 확인");
-    console.log(str);
-    return checkStringLength(str, 8, 20) && checkPasswordStyle(str);
-}
 
 function checkSignUpValid(){
     if(emailState && passwordState && passwordConfirmState && nicknameState){
@@ -55,8 +34,7 @@ function checkSignUpValid(){
     }
 }
 
-
-email.addEventListener("focusout", () =>{
+email.addEventListener("focusout", async () =>{
     const emailValue = email.value
     if(emailValue.length == 0){
         emailState = false;
@@ -66,7 +44,7 @@ email.addEventListener("focusout", () =>{
         emailState = false;
         emailHelper.textContent = "*올바른 이메일 주소 형식을 입력해주세요. (예: example@example.com)";
     }
-    else if(!checkEmail(emailValue)){
+    else if(!(await checkEmailDuplicate(emailValue))){
         emailState = false;
         emailHelper.textContent = "*중복된 이메일 입니다."
     }
@@ -135,4 +113,24 @@ nickname.addEventListener("focusout",() => {
         nicknameHelper.textContent = "";
     }
     checkSignUpValid();
+})
+
+signUpForm.addEventListener("submit", async (event) =>{
+    event.preventDefault();
+
+    const request = {
+        email: email.value,
+        password: password.value,
+        passwordConfirm: passwordConfirm.value,
+        nickname: nickname.value,
+        profileImage: profileImage.value
+    };
+
+    const response = await fetchSignUp(request);
+    if(response.status === 200){
+        moveToLogin();
+    }
+    else{
+        alert(data.message);
+    }
 })

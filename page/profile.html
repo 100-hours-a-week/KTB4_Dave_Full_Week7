@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>회원정보수정 | 아무 말 대잔치</title>
+
+  <link rel="stylesheet" href="/css/common.css" />
+  <link rel="stylesheet" href="/css/header.css" />
+  <link rel="stylesheet" href="/css/profile.css" />
+</head>
+<body>
+  <app-header></app-header>
+
+  <main class="profile-page">
+    <form id="profileForm" class="profile-form" novalidate>
+      <h2 class="profile-form__title">회원정보수정</h2>
+
+      <section class="profile-image-field" aria-labelledby="profileImageTitle">
+        <p id="profileImageTitle" class="profile-image-field__label">프로필 사진*</p>
+
+        <input
+          id="profileImageInput"
+          class="profile-image-field__input"
+          type="file"
+          accept="image/*"
+        />
+
+        <label
+          class="profile-image-field__button"
+          for="profileImageInput"
+          aria-label="프로필 사진 변경"
+        >
+          <img
+            id="profilePreview"
+            class="profile-image-field__preview"
+            src="/profile-image.jpeg"
+            alt="현재 프로필 사진"
+          />
+          <span class="profile-image-field__overlay">변경</span>
+        </label>
+      </section>
+
+      <section class="profile-form__panel" aria-label="회원정보 입력 영역">
+        <div class="profile-form__field">
+          <p class="profile-form__label">이메일</p>
+          <p id="emailText" class="profile-form__email">startupcode@gmail.com</p>
+        </div>
+
+        <div class="profile-form__field">
+          <label class="profile-form__label" for="nickname">닉네임</label>
+          <input
+            id="nickname"
+            class="profile-form__input"
+            type="text"
+            value="스타트업코드"
+            autocomplete="nickname"
+            aria-describedby="nicknameHelper"
+          />
+          <p id="nicknameHelper" class="profile-form__helper" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <button
+        id="profileSubmitButton"
+        class="profile-form__submit"
+        type="submit"
+      >
+        수정하기
+      </button>
+
+      <button
+        id="withdrawButton"
+        class="profile-form__withdraw"
+        type="button"
+      >
+        회원 탈퇴
+      </button>
+    </form>
+  </main>
+
+  <div id="profileToast" class="profile-toast" role="status" aria-live="polite" hidden>
+    수정완료
+  </div>
+
+  <div
+    id="withdrawModal"
+    class="withdraw-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="withdrawModalTitle"
+    hidden
+  >
+    <div class="withdraw-modal__content">
+      <h2 id="withdrawModalTitle" class="withdraw-modal__title">회원 탈퇴</h2>
+      <p class="withdraw-modal__message">
+        정말 회원 탈퇴를 진행하시겠습니까?
+      </p>
+
+      <div class="withdraw-modal__actions">
+        <button
+          id="withdrawCancelButton"
+          class="withdraw-modal__button withdraw-modal__button--cancel"
+          type="button"
+        >
+          취소
+        </button>
+
+        <button
+          id="withdrawConfirmButton"
+          class="withdraw-modal__button withdraw-modal__button--confirm"
+          type="button"
+        >
+          확인
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/js/AppHeader.js"></script>
+</body>
+</html>

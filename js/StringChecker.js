@@ -23,4 +23,7 @@ export function checkPasswordStyle(str) {
 export function confirmPassword(str1, str2){
     return str1 === str2;
 }
-console.log(checkPasswordStyle("asdfA123!"));
+
+export function validPassword(str){
+    return checkStringLength(str, 8, 20) && checkPasswordStyle(str);
+}

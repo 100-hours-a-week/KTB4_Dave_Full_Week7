@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>로그인 | 아무 말 대잔치</title>
+
+  <link rel="stylesheet" href="/css/common.css" />
+  <link rel="stylesheet" href="/css/header.css" />
+  <link rel="stylesheet" href="/css/signin.css" />
+</head>
+<body>
+  <app-header></app-header>
+
+  <main class="login-page">
+    <form id="loginForm" class="login-form" novalidate>
+      <h2 class="login-form__title">로그인</h2>
+
+      <div class="login-form__panel">
+        <div class="login-form__field">
+          <label class="login-form__label" for="email">이메일</label>
+          <input
+            id="email"
+            class="login-form__input"
+            type="email"
+            placeholder="이메일을 입력하세요"
+            autocomplete="email"
+            aria-describedby="loginHelper"
+          />
+        </div>
+
+        <div class="login-form__field">
+          <label class="login-form__label" for="password">비밀번호</label>
+          <input
+            id="password"
+            class="login-form__input"
+            type="password"
+            placeholder="비밀번호를 입력하세요"
+            autocomplete="current-password"
+            aria-describedby="signInHelper"
+          />
+        </div>
+
+        <p id="signInHelper" class="login-form__helper" aria-live="polite">*이메일을 입력해주세요.</p>
+      </div>
+
+      <button
+        id="loginButton"
+        class="login-form__submit"
+        type="submit"
+        disabled
+      >
+        로그인
+      </button>
+
+      <a id="signupLink" class="login-form__signup-link" href="/page/signup.html">
+        회원가입
+      </a>
+    </form>
+  </main>
+
+  <script type="module" src="/js/signin.js"></script>
+  <script type="module" src="/js/AppHeader.js"></script>
+</body>
+</html>
