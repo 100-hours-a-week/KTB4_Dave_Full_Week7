@@ -6,6 +6,7 @@ const signUpButton = document.getElementById("signupButton");
 const backButton = document.getElementById("backButton");
 
 const profileImage = document.getElementById("profileImageInput");
+const profilePreview = document.getElementById("profilePreview");
 const email = document.getElementById("email");
 const emailHelper = document.getElementById("emailHelper");
 let emailState = false;
@@ -33,6 +34,18 @@ function checkSignUpValid(){
         signUpButton.disabled = true;
     }
 }
+
+profileImage.addEventListener("change", ()=>{
+    const file = profileImage.files[0];
+
+    if (!file) {
+        profilePreview.hidden = true;
+        return;
+    }
+
+    profilePreview.src = URL.createObjectURL(file);
+    profilePreview.hidden = false;
+})
 
 email.addEventListener("focusout", async () =>{
     const emailValue = email.value
@@ -95,7 +108,6 @@ passwordConfirm.addEventListener("focusout", () => {
 
 nickname.addEventListener("focusout",() => {
     const nicknameValue = nickname.value;
-    console.log(nicknameValue)
     if(nicknameValue.length === 0){
         nicknameState = false;
         nicknameHelper.textContent = "*닉네임을 입력해주세요.";
@@ -118,19 +130,21 @@ nickname.addEventListener("focusout",() => {
 signUpForm.addEventListener("submit", async (event) =>{
     event.preventDefault();
 
-    const request = {
-        email: email.value,
-        password: password.value,
-        passwordConfirm: passwordConfirm.value,
-        nickname: nickname.value,
-        profileImage: profileImage.value
-    };
+    const request = new FormData();
+    request.append("email", email.value);
+    request.append("password", password.value);
+    request.append("passwordConfirm", passwordConfirm.value);
+    request.append("nickname", nickname.value);
+    if (profileImage.files[0]) {
+        request.append("imageFile", profileImage.files[0]);
+    }
 
     const response = await fetchSignUp(request);
-    if(response.status === 200){
+    const data = await response.json();
+    if(response.status === 201){
         moveToLogin();
     }
     else{
-        alert(data.message);
+        alert(data.code);
     }
 })

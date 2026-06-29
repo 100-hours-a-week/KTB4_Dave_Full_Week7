@@ -12,6 +12,7 @@
   margin: 0;
   font-size: 28px;
   font-weight: 400;
+  cursor: pointer;
 }
 
 .header__left,
@@ -86,12 +87,11 @@
   position: absolute;
   top: 48px;
   right: 0;
-  width: 96px;
+  width: 112px;
   padding: 8px 0;
   background: #d9d9d9;
   z-index: 10;
 }
-
 
 .header__dropdown-button {
   display: block;

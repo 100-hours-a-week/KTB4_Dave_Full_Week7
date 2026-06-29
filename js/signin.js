@@ -83,12 +83,10 @@ loginForm.addEventListener("submit", async (event) => {
         } = data;
         setAccessToken(accessToken);
         setUserInfo(userInfo);
-        console.log(sessionStorage.getItem("accessToken"));
-        console.log(sessionStorage.getItem("userInfo"));
         moveToPostPage();
     }
     else{
         signInHelper.textContent = "*아이디 또는 비밀번호를 확인해주세요"
-        alert(data.message);
+        alert(data.code);
     }
 })

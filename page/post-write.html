@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>게시글 작성 | 아무 말 대잔치</title>
+
+  <link rel="stylesheet" href="/css/common.css" />
+  <link rel="stylesheet" href="/css/header.css" />
+  <link rel="stylesheet" href="/css/post-write.css" />
+</head>
+<body>
+  <app-header back-url="/page/posts.html"></app-header>
+
+  <main class="post-write-page">
+    <form id="postWriteForm" class="post-write-form" novalidate>
+      <h2 class="post-write-form__title">게시글 작성</h2>
+
+      <section class="post-write-form__field">
+        <label class="post-write-form__label" for="postTitle">제목*</label>
+        <input
+          id="postTitle"
+          class="post-write-form__input"
+          type="text"
+          maxlength="26"
+          placeholder="제목을 입력해주세요. (최대 26글자)"
+          aria-describedby="postWriteHelper"
+        />
+      </section>
+
+      <section class="post-write-form__field">
+        <label class="post-write-form__label" for="postContent">내용*</label>
+        <textarea
+          id="postContent"
+          class="post-write-form__textarea"
+          placeholder="내용을 입력해주세요."
+          aria-describedby="postWriteHelper"
+        ></textarea>
+
+        <p id="postWriteHelper" class="post-write-form__helper" aria-live="polite"></p>
+      </section>
+
+      <section class="post-write-form__image-field" aria-labelledby="postImageLabel">
+        <p id="postImageLabel" class="post-write-form__label">이미지</p>
+
+        <div class="post-write-form__file-row">
+          <label class="post-write-form__file-button" for="postImageInput">
+            파일 선택
+          </label>
+
+          <input
+            id="postImageInput"
+            class="post-write-form__file-input"
+            type="file"
+            accept="image/*"
+          />
+
+          <span id="postImageFileName" class="post-write-form__file-name">
+            파일을 선택해주세요.
+          </span>
+        </div>
+
+        <img
+          id="postImagePreview"
+          class="post-write-form__image-preview"
+          src=""
+          alt="업로드한 게시글 이미지 미리보기"
+          hidden
+        />
+      </section>
+
+      <button
+        id="postSubmitButton"
+        class="post-write-form__submit"
+        type="submit"
+        disabled
+      >
+        완료
+      </button>
+    </form>
+  </main>
+
+  <script type="module" src="/js/post-write.js"></script>
+  <script type="module" src="/js/AppHeader.js"></script>
+</body>
+</html>

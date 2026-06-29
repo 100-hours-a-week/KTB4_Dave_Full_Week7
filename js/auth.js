@@ -1,4 +1,6 @@
 import {isJwtExpired} from './jwtUtil.js'
+const API_BASE_URL = "http://localhost:8080";
+
 export function setAccessToken(token) {
     sessionStorage.setItem("accessToken", token);
 }
@@ -20,11 +22,20 @@ export function removeUserInfo(){
 }
 
 export function getUserInfo(){
-    return sessionStorage.getItem("userInfo");
+    const userInfo = sessionStorage.getItem("userInfo");
+    if (!userInfo) {
+        return null;
+    }
+
+    try {
+        return JSON.parse(userInfo);
+    } catch (error) {
+        console.error("userInfo 파싱 실패", error);
+        return null;
+    }
 }
 
 export function isSignIn(){
-    console.log(getAccessToken());
     return getValidToken()? true : false;
 }
 
@@ -40,4 +51,9 @@ export function getValidToken(){
         return null;
     }
     return accessToken;
+}
+
+export function clearAuth() {
+  removeAccessToken();
+  removeUserInfo();
 }

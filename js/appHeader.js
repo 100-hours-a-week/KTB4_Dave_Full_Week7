@@ -1,4 +1,7 @@
-import { isSignIn, getUserInfo } from "./auth.js";
+import { fetchSignOut } from "./api/fetchData.js";
+import { isSignIn, getUserInfo, clearAuth } from "./auth.js";
+
+const API_BASE_URL = "http://localhost:8080";
 
 class AppHeader extends HTMLElement {
   connectedCallback() {
@@ -8,7 +11,9 @@ class AppHeader extends HTMLElement {
     const signedIn = isSignIn();
     const userInfo = signedIn ? getUserInfo() : null;
 
-    const profileImage = userInfo?.profileImage || "/profile-image.jpeg";
+    const profileImage = userInfo?.profileImage
+      ? `${API_BASE_URL}${userInfo.profileImage}`
+      : "/profile-image.jpeg";
 
     this.innerHTML = `
       <header class="header">
@@ -60,6 +65,14 @@ class AppHeader extends HTMLElement {
                     <button
                       class="header__dropdown-button"
                       type="button"
+                      data-action="liked-posts"
+                    >
+                      좋아요한 글
+                    </button>
+
+                    <button
+                      class="header__dropdown-button"
+                      type="button"
                       data-action="logout"
                     >
                       로그아웃
@@ -67,15 +80,24 @@ class AppHeader extends HTMLElement {
                   </div>
                 </div>
               `
-              :  ""//`<a class="header__login-link" href="/page/login.html">로그인</a>`
+              : ""
           }
         </div>
       </header>
     `;
 
+    this.querySelector(".header__title")?.addEventListener("click", () => {
+      if (signedIn) {
+        location.href = "/page/posts.html";
+        return;
+      }
+
+      location.href = "/page/signin.html";
+    });
+
     this.querySelector(".header__back-button")?.addEventListener("click", () => {
       if (backURL) {
-        location.href = backURL;
+        location.href = this.getAttribute("back-url") || "/";
         return;
       }
 
@@ -96,7 +118,7 @@ class AppHeader extends HTMLElement {
       profileButton.setAttribute("aria-expanded", String(!isOpen));
     });
 
-    this.querySelector(".header__dropdown")?.addEventListener("click", (event) => {
+    this.querySelector(".header__dropdown")?.addEventListener("click", async (event) => {
       const button = event.target.closest("[data-action]");
 
       if (!button) {
@@ -115,9 +137,32 @@ class AppHeader extends HTMLElement {
         return;
       }
 
+      if (action === "liked-posts") {
+        location.href = "/page/posts.html?type=liked";
+        return;
+      }
+
       if (action === "logout") {
-        // logout();
-        location.href = "/page/login.html";
+        const response = await fetchSignOut();
+        const data = await response.json();
+
+        console.log(data);
+
+        if (response.status === 200) {
+          alert("로그아웃 성공");
+          clearAuth();
+          location.href = "/page/signin.html";
+          return;
+        }
+
+        if (response.status === 401) {
+          alert("로그인이 필요합니다.");
+          clearAuth();
+          location.href = "/page/signin.html";
+          return;
+        }
+
+        alert("로그아웃 실패");
       }
     });
   }

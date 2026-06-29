@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>게시글 상세 | 아무 말 대잔치</title>
+
+  <link rel="stylesheet" href="/css/common.css" />
+  <link rel="stylesheet" href="/css/header.css" />
+  <link rel="stylesheet" href="/css/post-detail.css" />
+</head>
+<body>
+  <app-header back-url="/page/posts.html"></app-header>
+
+  <main class="post-detail-page">
+    <article class="post-detail">
+      <header class="post-detail__header">
+        <div class="post-detail__title-area">
+          <h2 id="postTitle" class="post-detail__title">제목 1</h2>
+
+          <div class="post-detail__meta">
+            <div id="postAuthorImage" class="post-detail__author-image" aria-hidden="true"></div>
+            <strong id="postAuthorName" class="post-detail__author-name">더미 작성자 1</strong>
+            <time
+              id="postCreatedAt"
+              class="post-detail__created-at"
+              datetime="2021-01-01T00:00:00"
+            >
+              2021-01-01 00:00:00
+            </time>
+          </div>
+        </div>
+
+        <div class="post-detail__actions" aria-label="게시글 관리">
+          <button id="postEditButton" class="post-detail__action-button" type="button">
+            수정
+          </button>
+          <button id="postDeleteButton" class="post-detail__action-button" type="button">
+            삭제
+          </button>
+        </div>
+      </header>
+
+      <img
+        id="postImage"
+        class="post-detail__image"
+        alt="게시글 이미지"
+        hidden
+      />
+
+      <p id="postContent" class="post-detail__content">
+        무엇을 얘기할까요? 아무말이라면, 삶은 항상 놀라운 모험이라고 생각합니다.
+        우리는 매일 새로운 경험을 하고 배우며 성장합니다. 때로는 어려움과 도전이 있지만,
+        그것들이 우리를 더 강하고 지혜롭게 만듭니다. 또한 우리는 주변의 사람들과 연결되며
+        사랑과 지지를 받습니다. 그래서 우리의 삶은 소중하고 의미가 있습니다.
+        자연도 아름다운 이야기입니다. 우리 주변의 자연은 끝없는 아름다움과 신비로움을 담고 있습니다.
+      </p>
+
+      <section class="post-stats" aria-label="게시글 통계">
+        <button
+          id="likeButton"
+          class="post-stats__button post-stats__button--like"
+          type="button"
+          aria-pressed="false"
+        >
+          <strong id="likeCount" class="post-stats__count">123</strong>
+          <span class="post-stats__label">좋아요수</span>
+        </button>
+
+        <div class="post-stats__button" aria-label="조회수">
+          <strong id="viewCount" class="post-stats__count">123</strong>
+          <span class="post-stats__label">조회수</span>
+        </div>
+
+        <div class="post-stats__button" aria-label="댓글수">
+          <strong id="commentCount" class="post-stats__count">123</strong>
+          <span class="post-stats__label">댓글</span>
+        </div>
+      </section>
+    </article>
+
+    <section class="comment-section" aria-label="댓글 영역">
+      <form id="commentForm" class="comment-form" novalidate>
+        <label class="comment-form__label" for="commentInput">댓글 작성</label>
+
+        <textarea
+          id="commentInput"
+          class="comment-form__textarea"
+          placeholder="댓글을 남겨주세요!"
+          aria-describedby="commentHelper"
+        ></textarea>
+
+        <p id="commentHelper" class="comment-form__helper" aria-live="polite"></p>
+
+        <div class="comment-form__actions">
+          <button
+            id="commentSubmitButton"
+            class="comment-form__submit"
+            type="submit"
+            disabled
+          >
+            댓글 등록
+          </button>
+        </div>
+      </form>
+
+      <div id="commentList" class="comment-list">
+
+      </div>
+    </section>
+  </main>
+
+  <div
+    id="postDeleteModal"
+    class="confirm-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="postDeleteModalTitle"
+    hidden
+  >
+    <div class="confirm-modal__content">
+      <h2 id="postDeleteModalTitle" class="confirm-modal__title">
+        게시글을 삭제하시겠습니까?
+      </h2>
+      <p class="confirm-modal__message">
+        삭제한 내용은 복구 할 수 없습니다.
+      </p>
+
+      <div class="confirm-modal__actions">
+        <button
+          id="postDeleteCancelButton"
+          class="confirm-modal__button confirm-modal__button--cancel"
+          type="button"
+        >
+          취소
+        </button>
+        <button
+          id="postDeleteConfirmButton"
+          class="confirm-modal__button confirm-modal__button--confirm"
+          type="button"
+        >
+          확인
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div
+    id="commentDeleteModal"
+    class="confirm-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="commentDeleteModalTitle"
+    hidden
+  >
+    <div class="confirm-modal__content">
+      <h2 id="commentDeleteModalTitle" class="confirm-modal__title">
+        댓글을 삭제하시겠습니까?
+      </h2>
+      <p class="confirm-modal__message">
+        삭제한 내용은 복구 할 수 없습니다.
+      </p>
+
+      <div class="confirm-modal__actions">
+        <button
+          id="commentDeleteCancelButton"
+          class="confirm-modal__button confirm-modal__button--cancel"
+          type="button"
+        >
+          취소
+        </button>
+        <button
+          id="commentDeleteConfirmButton"
+          class="confirm-modal__button confirm-modal__button--confirm"
+          type="button"
+        >
+          확인
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/js/postSection.js"></script>
+  <script type="module" src="/js/commentSection.js"></script>
+  <script type="module" src="/js/AppHeader.js"></script>
+</body>
+</html>

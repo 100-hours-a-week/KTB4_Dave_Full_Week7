@@ -1,0 +1,177 @@
+.post-write-page {
+  display: flex;
+  justify-content: center;
+  padding: 28px 20px 60px;
+}
+
+.post-write-form {
+  width: 100%;
+  max-width: 600px;
+}
+
+.post-write-form__title {
+  margin: 0 0 56px;
+  text-align: center;
+  font-size: var(--font-size-page-title);
+  font-weight: 700;
+}
+
+.post-write-form__field {
+  padding: 0 8px 4px;
+  border-bottom: 1px solid #dddddd;
+  margin-bottom: 28px;
+}
+
+.post-write-form__label {
+  display: block;
+  margin: 0 0 12px;
+  font-size: var(--font-size-label);
+  font-weight: 700;
+}
+
+.post-write-form__input {
+  display: block;
+  width: 100%;
+  height: 56px;
+  padding: 0 12px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--color-text);
+  font-size: 16px;
+}
+
+.post-write-form__input::placeholder,
+.post-write-form__textarea::placeholder {
+  color: #8f8f8f;
+}
+
+.post-write-form__input:focus,
+.post-write-form__textarea:focus {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.post-write-form__textarea {
+  display: block;
+  width: 100%;
+  min-height: 260px;
+  padding: 16px 12px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--color-text);
+  font-family: var(--font-family-base);
+  font-size: 16px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.post-write-form__helper {
+  min-height: var(--helper-height);
+  margin: 4px 0 0;
+  color: var(--color-helper);
+  font-size: var(--font-size-helper);
+  line-height: var(--helper-height);
+}
+
+.post-write-form__image-field {
+  padding: 0 8px 16px;
+  border-bottom: 1px solid #dddddd;
+  margin-bottom: 16px;
+}
+
+.post-write-form__file-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.post-write-form__file-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 72px;
+  height: 28px;
+  padding: 0 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background: #ffffff;
+  color: var(--color-text);
+  font-size: var(--font-size-button);
+  cursor: pointer;
+}
+
+.post-write-form__file-button:hover,
+.post-write-form__file-button:focus {
+  background: #e9e9e9;
+}
+
+.post-write-form__file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.post-write-form__file-name {
+  color: var(--color-text);
+  font-size: var(--font-size-button);
+}
+
+.post-write-form__image-preview {
+  display: block;
+  max-width: 100%;
+  max-height: 240px;
+  margin-top: 12px;
+  border-radius: 6px;
+  object-fit: contain;
+}
+
+.post-write-form__image-preview[hidden] {
+  display: none;
+}
+
+.post-write-form__submit {
+  display: block;
+  width: 100%;
+  max-width: 380px;
+  height: var(--button-height);
+  margin: 0 auto;
+  border: none;
+  border-radius: 4px;
+  background: var(--color-button-active);
+  color: var(--color-button-text);
+  font-size: var(--font-size-button);
+  cursor: pointer;
+}
+
+.post-write-form__submit:disabled {
+  background: var(--color-button-disabled);
+  cursor: not-allowed;
+}
+
+.post-write-form__submit:focus {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .post-write-page {
+    padding: 24px 16px 48px;
+  }
+
+  .post-write-form__title {
+    margin-bottom: 40px;
+  }
+
+  .post-write-form__textarea {
+    min-height: 220px;
+  }
+
+  .post-write-form__submit {
+    max-width: 100%;
+  }
+}
