@@ -87,7 +87,7 @@ function createCommentElement(commentNode) {
     if(!comment.deleted){
         if(comment.depth < 3){
             const replyButton = document.createElement("button");
-            replyButton.className = "comment-item__action-button comment-item__reply-button";
+            replyButton.className = "comment-item__reply-button";
             replyButton.type = "button";
             replyButton.textContent = "답글";
             replyButton.dataset.commentId = comment.commentNum;
