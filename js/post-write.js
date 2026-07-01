@@ -76,7 +76,9 @@ async function temporarySave() {
     }
     request.append("title", postTitle.value);
     request.append("content", postContent.value);
-    request.append("image", postImageInput.files[0]);
+    if(postImageInput.files[0]){
+        request.append("image", postImageInput.files[0]);
+    }
     const temporaryId = await getTemporaryKey();
 
     const response = await fetchTemporarySavePost(temporaryId, request);
@@ -146,9 +148,11 @@ postWriteForm.addEventListener("submit", async (event) => {
     }
     const data = (await response.json());
     if(response.status === 201){
-        const tempKeyDelete = await fetchDeleteTemporaryKey(await getTemporaryKey());
-        if(tempKeyDelete.status !== 200){
-            console.log("임시 키 삭제 실패");
+        if(temporaryKeyPromise){
+            const tempKeyDelete = await fetchDeleteTemporaryKey(await getTemporaryKey());
+            if(tempKeyDelete.status !== 200){
+                console.log("임시 키 삭제 실패");
+            }
         }
 
         location.href = "/page/posts.html"

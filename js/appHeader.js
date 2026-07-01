@@ -143,20 +143,15 @@ class AppHeader extends HTMLElement {
       }
 
       if (action === "logout") {
-        const response = await fetchSignOut();
-        const data = await response.json();
-
-        console.log(data);
-
-        if (response.status === 200) {
+        try{
+          const response = await fetchSignOut();
           alert("로그아웃 성공");
           clearAuth();
           location.href = "/page/signin.html";
           return;
         }
-
-        if (response.status === 401) {
-          alert("로그인이 필요합니다.");
+        catch (error) {
+          alert(error.message);
           clearAuth();
           location.href = "/page/signin.html";
           return;

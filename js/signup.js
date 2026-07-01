@@ -57,13 +57,24 @@ email.addEventListener("focusout", async () =>{
         emailState = false;
         emailHelper.textContent = "*올바른 이메일 주소 형식을 입력해주세요. (예: example@example.com)";
     }
-    else if(!(await checkEmailDuplicate(emailValue))){
-        emailState = false;
-        emailHelper.textContent = "*중복된 이메일 입니다."
-    }
-    else{
-        emailState = true;
-        emailHelper.textContent = "";
+    else {
+        try{
+            const response = await checkEmailDuplicate(emailValue);
+            if(response){
+                emailState = true;
+                emailHelper.textContent = "";
+            }
+            else{
+                emailState = false;
+                emailHelper.textContent = "*중복된 이메일 입니다."
+            }
+        }
+        catch{
+            emailState = false;
+            emailHelper.textContent = "*이메일 중복 검사 실패, 잠시 후 다시 시도해주세요."
+        }
+
+
     }
     checkSignUpValid();
 })
@@ -139,12 +150,11 @@ signUpForm.addEventListener("submit", async (event) =>{
         request.append("imageFile", profileImage.files[0]);
     }
 
-    const response = await fetchSignUp(request);
-    const data = await response.json();
-    if(response.status === 201){
+    try{
+        const response = await fetchSignUp(request);
         moveToLogin();
     }
-    else{
-        alert(data.code);
+    catch(error){
+        alert(error.message);
     }
 })

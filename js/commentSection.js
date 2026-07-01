@@ -95,19 +95,21 @@ function createCommentElement(commentNode) {
             actions.append(replyButton);
         }
         
-        if(userInfo.nickname == comment.nickname){
-            const editButton = document.createElement("button");
-            editButton.className = "comment-item__edit-button";
-            editButton.type = "button";
-            editButton.textContent = "수정";
-            editButton.dataset.commentId = comment.commentNum;
+        if(userInfo){
+            if(userInfo.nickname == comment.nickname){
+                const editButton = document.createElement("button");
+                editButton.className = "comment-item__edit-button";
+                editButton.type = "button";
+                editButton.textContent = "수정";
+                editButton.dataset.commentId = comment.commentNum;
 
-            const deleteButton = document.createElement("button");
-            deleteButton.className = "comment-item__delete-button";
-            deleteButton.type = "button";
-            deleteButton.textContent = "삭제";
-            deleteButton.dataset.commentId = comment.commentNum;
-            actions.append(editButton, deleteButton);
+                const deleteButton = document.createElement("button");
+                deleteButton.className = "comment-item__delete-button";
+                deleteButton.type = "button";
+                deleteButton.textContent = "삭제";
+                deleteButton.dataset.commentId = comment.commentNum;
+                actions.append(editButton, deleteButton);
+            }
         }
     }
 

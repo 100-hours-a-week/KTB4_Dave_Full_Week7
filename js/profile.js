@@ -21,6 +21,7 @@ function initPage(){
     if(userInfo === null || userInfo === undefined){
         alert("로그인이 필요합니다.")
         location.href = "/page/signin.html";
+        return;
     }
 
     emailText.textContent = userInfo.email;
@@ -56,12 +57,21 @@ profileForm.addEventListener("submit", async (event) =>{
         nicknameHelper.textContent = "*닉네임은 최대 10자 까지 작성 가능합니다."
     }
     else{
-        if(!(await checkNicknameDuplicate(nicknameValue))){
-            nicknameHelper.textContent = "*중복된 닉네임 입니다.";
+        try{
+            const response = await checkEmailDuplicate(emailValue);
+            if(response){
+                nicknameHelper.textContent = "";
+            }
+            else{
+                nicknameHelper.textContent = "*중복된 닉네임 입니다."
+                return;
+            }
+        }
+        catch{
+            nicknameHelper.textContent = "*닉네임 중복 검사 실패, 잠시 후 다시 시도해주세요."
             return;
         }
 
-        nicknameHelper.textContent = "";
         const request = new FormData();
         const userInfo = getUserInfo();
 
@@ -71,17 +81,16 @@ profileForm.addEventListener("submit", async (event) =>{
             request.append("imageFile", profileImageInput.files[0]);
         }
 
-        const response = await fetchChangeUserInfo(request);
-        const data = (await response.json());
-        if(response.status === 200){
-            userInfo.nickname = data.data.nickname;
-            userInfo.profileImage = data.data.profileImage;
+        try{
+            const response = await fetchChangeUserInfo(request);
+            userInfo.nickname = response.data.nickname;
+            userInfo.profileImage = response.data.profileImage;
             setUserInfo(userInfo);
             profileToast.hidden = false;
             setTimeout(() => profileToast.hidden = true, 1000);
         }
-        else{
-            console.log(data.code);
+        catch(error){
+            alert(error.message);
         }
     }
 })
@@ -95,14 +104,14 @@ withdrawCancelButton.addEventListener("click", () => {
 })
 
 withdrawConfirmButton.addEventListener("click", async () => {
-    const response = await fetchWithdrawUser();
+    try{
+        const response = await fetchWithdrawUser();
 
-    if(response.status === 200){
         alert("탈퇴완료");
         location.href = "/page/signin.html";
     }
-    else{
-        alert("탈퇴실패");
+    catch(error){
+        alert(error.message);
     }
 
 })

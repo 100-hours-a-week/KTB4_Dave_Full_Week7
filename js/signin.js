@@ -73,10 +73,8 @@ loginForm.addEventListener("submit", async (event) => {
         password: password.value
     };
 
-    const response = await fetchSignIn(request);
-
-    const data = (await response.json()).data;
-    if(response.status === 200){
+    try{
+        const response = await fetchSignIn(request);
         const {
             accessToken,
             ...userInfo
@@ -85,8 +83,8 @@ loginForm.addEventListener("submit", async (event) => {
         setUserInfo(userInfo);
         moveToPostPage();
     }
-    else{
+    catch(error){
         signInHelper.textContent = "*아이디 또는 비밀번호를 확인해주세요"
-        alert(data.code);
+        alert(error.message);
     }
 })

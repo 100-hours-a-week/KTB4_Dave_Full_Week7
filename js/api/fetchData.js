@@ -1,6 +1,5 @@
 import { getValidToken } from "../auth.js";
 const API_BASE_URL = "http://127.0.0.1:8080";
-const accessToken = getValidToken();
 
 export async function checkEmailDuplicate(email) {
     const request = new Request(`${API_BASE_URL}/users/email`, {
@@ -11,12 +10,16 @@ export async function checkEmailDuplicate(email) {
         const response = await fetch(request);
         if(response.status === 200){
             return true;
-        }else{
+        }else if(response.status === 409){
             return false;
+        }
+        else{
+            throw error;
         }
     }
     catch(error){
         console.log(error.message);
+        throw error;
     }
 }
 
@@ -35,6 +38,7 @@ export async function checkNicknameDuplicate(nickname) {
     }
     catch(error){
         console.log(error.message);
+        throw error;
     }
 }
 
@@ -46,10 +50,17 @@ export async function fetchSignUp(signUpRequest){
     
     try{
         const data = await fetch(request);
-        return data;     
+        const json = await data.json();
+        if(data.status === 201){
+            return json;     
+        }
+        else {
+            throw new Error(json.code);
+        }
+    
     }
     catch(error){
-        console.log(error.message);
+        throw error;
     }
 }
 
@@ -65,14 +76,22 @@ export async function fetchSignIn(signInRequest){
     
     try{
         const data = await fetch(request);
-        return data;
+        const json = await data.json();
+        if(data.status === 200){
+            return json;
+        }
+        else {
+            throw new Error(json.code);
+        }
     }
     catch(error){
         console.log(error.message);
+        throw error;
     }
 }
 
 export async function fetchSignOut() {
+    const accessToken = getValidToken();
     const request = new Request(`${API_BASE_URL}/users/state`, {
         method: "DELETE",
         headers: {
@@ -84,16 +103,24 @@ export async function fetchSignOut() {
     
     try{
         const data = await fetch(request);
-        return data;
+        const json = await data.json();
+        if(data.status === 200){
+            return json;
+        }
+        else{
+            throw new Error(json.code);
+        }
     }
     catch(error){
         console.log(error.message);
+        throw error;
     }
     
 }
 
 export async function fetchWithdrawUser(){
-        const request = new Request(`${API_BASE_URL}/users`, {
+    const accessToken = getValidToken();
+    const request = new Request(`${API_BASE_URL}/users`, {
         method: "DELETE",
         headers: {
             "Authorization" : "Bearer " + accessToken,
@@ -104,14 +131,22 @@ export async function fetchWithdrawUser(){
     
     try{
         const data = await fetch(request);
-        return data;
+        const json = await data.json();
+        if(data.status === 200){
+            return json;
+        }
+        else{
+            throw new Error(json.code);
+        }
     }
     catch(error){
         console.log(error.message);
+        throw error;
     }
 }
 
 export async function fetchChangeUserInfo(userInfoRequest){
+    const accessToken = getValidToken();
     const request = new Request(`${API_BASE_URL}/users/info`, {
         method: "PATCH",
         headers: {
@@ -122,14 +157,22 @@ export async function fetchChangeUserInfo(userInfoRequest){
     
     try{
         const data = await fetch(request);
-        return data;
+        const json = await data.json();
+        if(data.status === 200){
+            return json;
+        }
+        else{
+            throw new Error(json.code);
+        }
     }
     catch(error){
         console.log(error.message);
+        throw error;
     }
 }
 
 export async function fetchChangePassword(passwordRequest){
+    const accessToken = getValidToken();
     const request = new Request(`${API_BASE_URL}/users/password`, {
         method: "PATCH",
         headers: {
@@ -141,10 +184,16 @@ export async function fetchChangePassword(passwordRequest){
     
     try{
         const data = await fetch(request);
-        return data;
+        if(data.status === 200){
+            return data;
+        }
+        else{
+            throw new Error("비밀번호 변경 실패");
+        }
     }
     catch(error){
         console.log(error.message);
+        throw error;
     }
 }
 
@@ -163,10 +212,12 @@ export async function fetchPosts(index, size){
     }
     catch(error){
         console.log(error.message);
+        throw error;
     }
 }
 
 export async function fetchAddPost(postRequest){
+    const accessToken = getValidToken();
     const request = new Request(`${API_BASE_URL}/posts`, {
         method: "POST",
         headers: {
@@ -181,10 +232,12 @@ export async function fetchAddPost(postRequest){
     }
     catch(error){
         console.log(error.message);
+        throw error;
     }
 }
 
 export async function fetchIssueTemporaryKey(){
+    const accessToken = getValidToken();
     const request = new Request(`${API_BASE_URL}/temporaryPost`, {
         method: "POST",
         headers: {
@@ -199,10 +252,12 @@ export async function fetchIssueTemporaryKey(){
     }
     catch(error){
         console.log(error.message);
+        throw error;
     }
 }
 
 export async function fetchDeleteTemporaryKey(temporaryId){
+    const accessToken = getValidToken();
     const request = new Request(`${API_BASE_URL}/temporaryPost/${temporaryId}`, {
         method: "DELETE",
         headers: {
@@ -217,10 +272,12 @@ export async function fetchDeleteTemporaryKey(temporaryId){
     }
     catch(error){
         console.log(error.message);
+        throw error;
     }
 }
 
 export async function fetchTemporarySavePost(temporaryId,postRequest){
+    const accessToken = getValidToken();
     const request = new Request(`${API_BASE_URL}/temporaryPost/${temporaryId}`, {
         method: "PUT",
         headers: {
@@ -235,10 +292,12 @@ export async function fetchTemporarySavePost(temporaryId,postRequest){
     }
     catch(error){
         console.log(error.message);
+        throw error;
     }
 }
 
 export async function fetchGetTemporaryPost(temporaryId){
+    const accessToken = getValidToken();
     const request = new Request(`${API_BASE_URL}/temporaryPost/${temporaryId}`, {
         method: "GET",
         headers: {
@@ -253,10 +312,12 @@ export async function fetchGetTemporaryPost(temporaryId){
     }
     catch(error){
         console.log(error.message);
+        throw error;
     }
 }
 
 export async function fetchGetMyTemporaryPosts(){
+    const accessToken = getValidToken();
     const request = new Request(`${API_BASE_URL}/temporaryPost/`, {
         method: "GET",
         headers: {
@@ -271,6 +332,7 @@ export async function fetchGetMyTemporaryPosts(){
     }
     catch(error){
         console.log(error.message);
+        throw error;
     }
 }
 
@@ -288,10 +350,12 @@ export async function fetchGetPostDetail(postNum) {
     }
     catch(error){
         console.log(error.message);
+        throw error;
     }
 }
 
 export async function fetchIsLikePost(postNum) {
+    const accessToken = getValidToken();
     const request = new Request(`${API_BASE_URL}/posts/${postNum}/like`, {
         method: "GET",
         headers: {
@@ -306,10 +370,12 @@ export async function fetchIsLikePost(postNum) {
     }
     catch(error){
         console.log(error.message);
+        throw error;
     }
 }
 
 export async function fetchPostLike(postNum) {
+    const accessToken = getValidToken();
     const request = new Request(`${API_BASE_URL}/posts/${postNum}/like`, {
         method: "POST",
         headers: {
@@ -324,10 +390,12 @@ export async function fetchPostLike(postNum) {
     }
     catch(error){
         console.log(error.message);
+        throw error;
     }
 }
 
 export async function fetchPostReport(postNum){
+    const accessToken = getValidToken();
     const request = new Request(`${API_BASE_URL}/posts/${postNum}/report`, {
         method: "PATCH",
         headers: {
@@ -342,10 +410,12 @@ export async function fetchPostReport(postNum){
     }
     catch(error){
         console.log(error.message);
+        throw error;
     }
 }
 
 export async function fetchEditPost(postNum, postRequest) {
+    const accessToken = getValidToken();
     const request = new Request(`${API_BASE_URL}/posts/${postNum}`, {
         method: "PATCH",
         headers: {
@@ -364,6 +434,7 @@ export async function fetchEditPost(postNum, postRequest) {
 }
 
 export async function fetchDeletePost(postNum){
+    const accessToken = getValidToken();
     const request = new Request(`${API_BASE_URL}/posts/${postNum}`, {
         method: "DELETE",
         headers: {
@@ -378,10 +449,12 @@ export async function fetchDeletePost(postNum){
     }
     catch(error){
         console.log(error.message);
+        throw error;
     }
 }
 
 export async function fetchGetLikedPost(index, size){
+    const accessToken = getValidToken();
     const request = new Request(`${API_BASE_URL}/posts/myLike?page=${index}&size=${size}`, {
         method: "GET",
         headers: {
@@ -396,6 +469,7 @@ export async function fetchGetLikedPost(index, size){
     }
     catch(error){
         console.log(error.message);
+        throw error;
     }    
 }
 
@@ -413,10 +487,12 @@ export async function fetchGetCommentsByPost(postNum) {
     }
     catch(error){
         console.log(error.message);
+        throw error;
     }
 }
 
 export async function fetchAddCommentToPost(postNum, commentRequest) {
+    const accessToken = getValidToken();
     const request = new Request(`${API_BASE_URL}/comments/post/${postNum}`, {
         method: "POST",
         headers: {
@@ -432,10 +508,12 @@ export async function fetchAddCommentToPost(postNum, commentRequest) {
     }
     catch(error){
         console.log(error.message);
+        throw error;
     }
 }
 
 export async function fetchAddCommentToComment(postNum, commentRequest) {
+    const accessToken = getValidToken();
     const request = new Request(`${API_BASE_URL}/comments/comment/${postNum}`, {
         method: "POST",
         headers: {
@@ -451,10 +529,12 @@ export async function fetchAddCommentToComment(postNum, commentRequest) {
     }
     catch(error){
         console.log(error.message);
+        throw error;
     }
 }
 
 export async function fetchEditComment(commentNum, commentRequest) {
+    const accessToken = getValidToken();
         const request = new Request(`${API_BASE_URL}/comments/${commentNum}`, {
         method: "PATCH",
         headers: {
@@ -470,11 +550,13 @@ export async function fetchEditComment(commentNum, commentRequest) {
     }
     catch(error){
         console.log(error.message);
+        throw error;
     }
 }
 
 
 export async function fetchDeleteComment(commentNum) {
+    const accessToken = getValidToken();
         const request = new Request(`${API_BASE_URL}/comments/${commentNum}`, {
         method: "DELETE",
         headers: {
@@ -489,5 +571,6 @@ export async function fetchDeleteComment(commentNum) {
     }
     catch(error){
         console.log(error.message);
+        throw error;
     }
 }
