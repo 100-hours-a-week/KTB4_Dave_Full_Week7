@@ -78,7 +78,7 @@ loginForm.addEventListener("submit", async (event) => {
         const {
             accessToken,
             ...userInfo
-        } = data;
+        } = response.data;
         setAccessToken(accessToken);
         setUserInfo(userInfo);
         moveToPostPage();
